@@ -1,0 +1,28 @@
+<select name="keys">
+<option value="">None</option>
+<option value="gks(25,1,1,1,0,2,6,1,0,1)">Ctrl+C</option>
+<option value="gks(25,1,1,1,0,2,25,1,0,1)">Ctrl+V</option>
+<option value="gks(25,1,1,1,0,2,27,1,0,1)">Ctrl+X</option>
+</select>
+<script>
+{   
+    let select = document.currentScript.previousElementSibling
+ 
+    function handleConfigUpdate(config){
+        if (config.script){
+            select.value = config.script
+        } else {
+            select.value = ""
+        }
+    }
+
+    select.addEventListener("input", function(){
+        var value = select.value
+        const event = new CustomEvent("updateCode", {bubbles: true, detail: {script: String(value)}})
+        select.dispatchEvent(event)
+    }, false)
+
+    const event = new CustomEvent("updateConfigHandler", {bubbles: true, detail: {handler: handleConfigUpdate}})
+    select.dispatchEvent(event)
+}
+</script>
